@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 const { mongoConnection } = require('./DB');
-// const usuarioEndpoint = require('./endpoints/UsuarioEndpoints')
 require('dotenv').config();
 const cors = require('cors');
 const port = process.env.PORT;
 const ArtistEndpoint = require('./endpoints/ArtistEndpoints')
+const AlbumEndpoint = require('./endpoints/AlbumEndpoints')
 
 
 mongoConnection(process.env.MONGODB_CONNECTION);
@@ -19,6 +19,7 @@ app.use(express.json());
 
 
 app.use('/Artist', ArtistEndpoint);
+app.use('/Album', AlbumEndpoint)
 
 app.get('/', (req,res) =>{
     res.send('Hola mundo')

@@ -4,7 +4,7 @@ const PlaylistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   idUser: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: false }],
   albumCover: {type: String, required: false},
-  releaseDate: {type: Date.now(), required: true},
+  creationDate: { type: Date, default: Date.now, required: false }
 });
 
 module.exports = mongoose.model('Playlist', PlaylistSchema);

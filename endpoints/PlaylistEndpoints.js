@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Playlist = require('../models/Playlist')
 
-// ✅ Obtener todas las playlists
+// Obtener todas las playlists
 router.get('/', async (req, res) => {
   try {
     const playlists = await Playlist.find().populate('idUser');
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Obtener una playlist por ID
+// Obtener una playlist por ID
 router.get('/:id', async (req, res) => {
   try {
     const playlist = await Playlist.findById(req.params.id).populate('idUser');
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ Crear una nueva playlist
+// Crear una nueva playlist
 router.post('/', async (req, res) => {
   const playlist = new Playlist({
     name: req.body.name,
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ Actualizar una playlist
+// Actualizar una playlist
 router.put('/:id', async (req, res) => {
   try {
     const updatedPlaylist = await Playlist.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ Eliminar una playlist
+// Eliminar una playlist
 router.delete('/:id', async (req, res) => {
   try {
     const deletedPlaylist = await Playlist.findByIdAndDelete(req.params.id);

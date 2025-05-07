@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Song = require('../models/Song'); // ajusta el path si es necesario
+const Song = require('../models/Song');
 
-// ✅ Obtener todas las canciones
+// Obtener todas las canciones
 router.get('/', async (req, res) => {
   try {
     const songs = await Song.find().populate('idArtist').populate('idAlbum').populate('idUserPlaylist');
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Obtener una canción por ID
+// Obtener una canción por ID
 router.get('/:id', async (req, res) => {
   try {
     const song = await Song.findById(req.params.id).populate('idArtist').populate('idAlbum').populate('idUserPlaylist');
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ Crear una nueva canción
+// Crear una nueva canción
 router.post('/', async (req, res) => {
   const song = new Song({
     name: req.body.name,
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ Actualizar una canción
+// Actualizar una canción
 router.put('/:id', async (req, res) => {
   try {
     const song = await Song.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ Eliminar una canción
+// Eliminar una canción
 router.delete('/:id', async (req, res) => {
   try {
     const song = await Song.findByIdAndDelete(req.params.id);

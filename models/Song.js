@@ -8,7 +8,7 @@ const SongSchema = new mongoose.Schema({
   idUserPlaylist: {type: mongoose.SchemaTypes.ObjectId, ref: 'Playlist', required: false},
   url: { type: String, required: true, unique: true},
   albumCover: {type: String, required: false},
-  releaseDate: {type: Date.now(), required: true},
+  releaseDate: { type: Date, default: Date.now, required: false }
 });
 
 module.exports = mongoose.model('Song', SongSchema);

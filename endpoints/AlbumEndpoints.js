@@ -4,7 +4,7 @@ const Album = require('../models/Album');
 const Song = require('../models/Song');
 
 // Obtener todos los álbumes
-router.get('/', async (req, res) => {
+router.get('/get', async (req, res) => {
   try {
     const albums = await Album.find()
       .populate('idArtist')
@@ -29,12 +29,11 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo álbum
-router.post('/', async (req, res) => {
+router.post('/add', async (req, res) => {
   const album = new Album({
     name: req.body.name,
     idArtist: req.body.idArtist,
     idSongs: req.body.idSongs,
-    url: req.body.url,
     albumCover: req.body.albumCover
   });
 

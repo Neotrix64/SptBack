@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Artist = require('../models/Artist'); // Ajusta la ruta si es necesario
+const Artist = require('../models/Artist');
 
-// ✅ Obtener todos los artistas
+// Obtener todos los artistas
 router.get('/', async (req, res) => {
   try {
     const artists = await Artist.find()
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ✅ Obtener un artista por ID
+// Obtener un artista por ID
 router.get('/:id', async (req, res) => {
   try {
     const artist = await Artist.findById(req.params.id)
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ Crear un nuevo artista
+// Crear un nuevo artista
 router.post('/add', async (req, res) => {
     const artist = new Artist({
       name: req.body.name,
@@ -46,7 +46,7 @@ router.post('/add', async (req, res) => {
     }
   });
 
-  // ✅ Actualizar solo los listeners del artista
+  // Actualizar solo los listeners del artista
 router.patch('/:id/monthListeners', async (req, res) => {
     try {
       const artist = await Artist.findById(req.params.id);
@@ -63,7 +63,7 @@ router.patch('/:id/monthListeners', async (req, res) => {
   
   
 
-// ✅ Actualizar un artista
+// Actualizar un artista
 router.put('/:id', async (req, res) => {
   try {
     const updatedArtist = await Artist.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -74,7 +74,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ Eliminar un artista
+//  Eliminar un artista
 router.delete('/:id', async (req, res) => {
   try {
     const deletedArtist = await Artist.findByIdAndDelete(req.params.id);
@@ -86,7 +86,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-// ✅ Obtener todas las canciones de un artista
+// Obtener todas las canciones de un artista
 router.get('/:id/songs', async (req, res) => {
     try {
       const artist = await Artist.findById(req.params.id).populate('idSongs');
@@ -97,7 +97,7 @@ router.get('/:id/songs', async (req, res) => {
     }
   });
   
-  // ✅ Agregar una canción a un artista
+  // Agregar una canción a un artista
   router.post('/:id/add-song', async (req, res) => {
     const { songId } = req.body;
   
@@ -116,7 +116,7 @@ router.get('/:id/songs', async (req, res) => {
     }
   });
   
-  // ✅ Agregar un álbum a un artista
+  // Agregar un álbum a un artista
   router.post('/:id/add-album', async (req, res) => {
     const { albumId } = req.body;
   
