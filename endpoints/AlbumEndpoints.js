@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Album = require('../models/Album');
 const Song = require('../models/Song');
+const Artist = require('../models/Artist')
 
 // Obtener todos los álbumes
 router.get('/get', async (req, res) => {
@@ -16,7 +17,7 @@ router.get('/get', async (req, res) => {
 });
 
 // Obtener un álbum por ID
-router.get('/:id', async (req, res) => {
+router.get('/get/:id', async (req, res) => {
   try {
     const album = await Album.findById(req.params.id)
       .populate('idArtist')
@@ -28,22 +29,39 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Crear un nuevo álbum
+// Crear un nuevo álbum y asociarlo al artista
 router.post('/add', async (req, res) => {
-  const album = new Album({
-    name: req.body.name,
-    idArtist: req.body.idArtist,
-    idSongs: req.body.idSongs,
-    albumCover: req.body.albumCover
-  });
+  const { name, idArtist, idSongs, albumCover } = req.body;
 
   try {
+    // Verificar que el artista existe
+    const artist = await Artist.findById(idArtist);
+    if (!artist) {
+      return res.status(404).json({ message: 'Artista no encontrado' });
+    }
+
+    // Crear el álbum
+    const album = new Album({
+      name,
+      idArtist,
+      idSongs,
+      albumCover
+    });
+
     const newAlbum = await album.save();
+
+    // Agregar el ID del álbum al artista (sin duplicados)
+    if (!artist.idAlbum.includes(newAlbum._id)) {
+      artist.idAlbum.push(newAlbum._id);
+      await artist.save();
+    }
+
     res.status(201).json(newAlbum);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
+
 
 // Actualizar un álbum
 router.put('/:id', async (req, res) => {
@@ -118,5 +136,23 @@ router.delete('/:albumId/remove-song/:songId', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// Obtener todos los álbumes por el ID de un artista
+router.get('/artist/:artistId', async (req, res) => {
+  try {
+    const albums = await Album.find({ idArtist: req.params.artistId })
+      .populate('idArtist')
+      .populate('idSongs');
+
+    if (!albums.length) {
+      return res.status(404).json({ message: 'No se encontraron álbumes para este artista' });
+    }
+
+    res.json(albums);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 module.exports = router;

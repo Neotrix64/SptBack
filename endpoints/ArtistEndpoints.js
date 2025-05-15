@@ -63,19 +63,19 @@ router.patch('/:id/monthListeners', async (req, res) => {
   
   
 
-// Actualizar un artista
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedArtist = await Artist.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedArtist) return res.status(404).json({ message: 'Artista no encontrado' });
-    res.json(updatedArtist);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
+  router.put('/update/:id', async (req, res) => {
+    try {
+      const updatedArtist = await Artist.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedArtist) return res.status(404).json({ message: 'Artista no encontrado' });
+      res.json(updatedArtist);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  });
+  
 
 //  Eliminar un artista
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     const deletedArtist = await Artist.findByIdAndDelete(req.params.id);
     if (!deletedArtist) return res.status(404).json({ message: 'Artista no encontrado' });
@@ -134,5 +134,18 @@ router.get('/:id/songs', async (req, res) => {
       res.status(400).json({ message: err.message });
     }
   });
+
+  // Obtener todos los álbumes de un artista
+router.get('/:id/albums', async (req, res) => {
+  try {
+    const artist = await Artist.findById(req.params.id).populate('idAlbum');
+    if (!artist) return res.status(404).json({ message: 'Artista no encontrado' });
+
+    res.json(artist.idAlbum);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 module.exports = router;
