@@ -25,6 +25,45 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+const axios = require('axios');
+
+// Streaming proxy para canción (reproduce audio ocultando URL real)
+router.get('/stream/:id', async (req, res) => {
+  try {
+    const song = await Song.findById(req.params.id);
+    if (!song) return res.status(404).json({ message: 'Canción no encontrada' });
+
+    const url = song.url;  // URL real en Cloudinary
+
+    // Hacemos la petición como stream a Cloudinary
+    const response = await axios({
+      method: 'GET',
+      url,
+      responseType: 'stream',
+      headers: {
+        // Agrega aquí headers si Cloudinary los requiere
+      }
+    });
+
+    // Pasamos headers importantes para que el navegador entienda el contenido
+    res.setHeader('Content-Type', response.headers['content-type']);
+    if (response.headers['content-length']) {
+      res.setHeader('Content-Length', response.headers['content-length']);
+    }
+    if (response.headers['accept-ranges']) {
+      res.setHeader('Accept-Ranges', response.headers['accept-ranges']);
+    }
+
+    // Pipeamos el stream a la respuesta del cliente
+    response.data.pipe(res);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al reproducir la canción' });
+  }
+});
+
+
 
 // Crear una nueva canción
 router.post('/add', async (req, res) => {
@@ -91,6 +130,25 @@ router.get('/get/random', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener canciones aleatorias' });
   }
 });
+
+router.get('/tipo/:type', async (req,res) =>{
+  try{
+    const {type} = req.params;
+  if(!type){
+    return res.status(404).json({message:"Especifica un tipo"})
+  }
+  const resultado = await Song.find({type: type})
+  .populate('idArtist')
+  
+  if(!resultado){
+    return res.status(404).json({message: "Tipo inexistente"})
+  }
+
+  res.status(200).json({canciones: resultado})
+  } catch(error){
+    res.status(500).json({error: error})
+  }
+})
 
 
 
