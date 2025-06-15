@@ -1,9 +1,9 @@
 
-# 🎵 Spotify Backend
+# 🎵 Music UI Redesign
 
-**Spotify Backend** es la parte del servidor sencilla de la plataforma spotify. Este backend permite la gestión de canciones, playlists y almacenamiento en la nube para archivos multimedia. Está construido con **Node.js**, **Express**, **MongoDB** y **Cloudinary** para una experiencia robusta y escalable.
+**Music App Back** es la parte del servidor sencilla de la plataforma Music UI Redesign. Este backend permite la gestión de canciones, playlists y almacenamiento en la nube para archivos multimedia. Está construido con **Node.js**, **Express**, **MongoDB** y **Cloudinary** para una experiencia robusta y escalable.
 
-Este proyecto fue desarrollado como parte de mi portafolio personal para demostrar habilidades en desarrollo backend con tecnologías modernas. **Spotify Backend Clone** no tiene fines comerciales ni de distribución.
+Este proyecto fue desarrollado como parte de mi portafolio personal para demostrar habilidades en desarrollo backend con tecnologías modernas. **Inspirado en spotify** no tiene fines comerciales ni de distribución ni afiliacion con spotify.
 
 ## 🚀 Tabla de Contenidos
 
@@ -18,7 +18,7 @@ Este proyecto fue desarrollado como parte de mi portafolio personal para demostr
 
 ## 💡 Descripción del Proyecto
 
-Este backend replica funcionalidades básicas de un servidor musical como Spotify. Almacena las canciones en la nube (Cloudinary), gestiona artista, maneja playlists y expone endpoints que serán consumidos por el frontend de la aplicación.
+Este backend replica funcionalidades básicas de un servidor musical. Almacena las canciones en la nube (Cloudinary), gestiona artista, maneja playlists y expone endpoints que serán consumidos por el frontend de la aplicación.
 
 El proyecto está desarrollado en **Node.js** con **Express.js**, utilizando **MongoDB** como base de datos y **Cloudinary** para el manejo de archivos multimedia (canciones y portadas).
 
@@ -50,8 +50,8 @@ Sigue estos pasos para correr el backend localmente:
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tuusuario/spotify-backend-clone.git
-cd spotify-backend-clone
+git clone https://github.com/tuusuario/Music-Ui-Back
+cd Music-Ui-Back
 ```
 
 ### 2. Instalar Dependencias
