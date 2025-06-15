@@ -10,6 +10,7 @@ const AlbumEndpoint = require('./endpoints/AlbumEndpoints')
 const SongEndpoint = require('./endpoints/SongEndpoints');
 const PlaylistEndpoint = require('./endpoints/PlaylistEndpoints');
 const SearchBarEndpoint = require('./endpoints/SearchBarEndpoint')
+const ProfileEndpoint = require('./endpoints/ProfileEndpoint')
 
 
 mongoConnection(process.env.MONGODB_CONNECTION);
@@ -27,6 +28,9 @@ app.use('/Album', AlbumEndpoint)
 app.use('/Song', SongEndpoint)
 app.use('/Playlist', PlaylistEndpoint)
 app.use('/busqueda', SearchBarEndpoint)
+app.use('/profile', ProfileEndpoint)
+
+
 
 app.get('/', (req,res) =>{
     res.send('Hola mundo')

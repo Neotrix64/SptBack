@@ -7,6 +7,7 @@ const SongSchema = new mongoose.Schema({
   idAlbum: { type: mongoose.SchemaTypes.ObjectId, ref: 'Album', required: false, default: null},
   idUserPlaylists: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Playlist' }],
   url: { type: String, required: true, unique: true},
+  duration: {type: String, required: false },
   albumCover: {type: String, required: false},
   releaseDate: { type: Date, default: Date.now, required: false }
 });

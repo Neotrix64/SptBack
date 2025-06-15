@@ -137,7 +137,7 @@ router.get('/tipo/:type', async (req,res) =>{
   if(!type){
     return res.status(404).json({message:"Especifica un tipo"})
   }
-  const resultado = await Song.find({type: type})
+  const resultado = await Song.find({type: type}).limit(5)
   .populate('idArtist')
   
   if(!resultado){
